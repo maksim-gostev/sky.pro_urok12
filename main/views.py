@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, render_template, request
 
 import functions
@@ -8,7 +9,6 @@ catalog_blueprint = Blueprint(
     'catalog_blueprint',
     __name__,
     template_folder='templates')
-
 
 @main_blueprint.route("/")
 def page_index():
