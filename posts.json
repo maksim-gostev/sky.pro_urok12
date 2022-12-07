@@ -66,5 +66,9 @@
     {
         "content": "тест",
         "pic": "./uploads/cat.png"
+    },
+    {
+        "content": "тест",
+        "pic": "./uploads/cat.png"
     }
 ]

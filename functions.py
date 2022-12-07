@@ -17,10 +17,10 @@ def get_all_post():
         return json_file
     except FileNotFoundError:
         # Будет выполнено, если файл не найден
-        print("Файл не найден")
+        return False
     except JSONDecodeError:
         # Будет выполнено, если файл найден, но не превращается из JSON
-        print("Файл не удается преобразовать")
+        return False
 
 
 def strip_punctuation_ru(string):
@@ -49,15 +49,19 @@ def search_for_posts(query):
     :param query: ключевое слово
     :return: список постов
     """
-    # все посты
-    all_post = get_all_post()
     # пустой список
     search_posts = []
-    for post in all_post:
-        siring = strip_punctuation_ru(post["content"])
-        if query.lower() in siring.lower().split():
-            search_posts.append(post)
-    return search_posts
+    # все посты
+    all_post = get_all_post()
+    if all_post:
+        for post in all_post:
+            siring = strip_punctuation_ru(post["content"])
+            if query.lower() in siring.lower().split():
+                search_posts.append(post)
+        return search_posts
+    else:
+        False
+
 
 def add_new_post(filename, task):
     """
@@ -70,11 +74,13 @@ def add_new_post(filename, task):
     temporary_dictionary = {'pic': f"./uploads/{filename}", "content": task}
     # все посты
     file_post = get_all_post()
+
     # добовление информации о новом посте
     file_post.append(temporary_dictionary)
     # запись этой информации в json фаил
     with open('posts.json', 'w', encoding='utf-8') as fout:
         json.dump(file_post, fout, ensure_ascii=False, sort_keys=True, indent=4)
+
 
 
 

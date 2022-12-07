@@ -1,5 +1,7 @@
-from flask import Flask, request, render_template, send_from_directory
-# from functions import ...
+import logging
+
+from flask import Flask, send_from_directory
+
 
 from loader.views import loader_blueprint
 from main.views import main_blueprint

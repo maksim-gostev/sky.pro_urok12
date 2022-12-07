@@ -36,13 +36,17 @@ def add_post():
 
     # Если расширение файла в белом списке
     if functions.is_filename_allowed(filename):
+        all_post = functions.get_all_post()
+        if all_post:
 
-        # Сохраняем картинку под родным именем в папку uploads
-        picture.save(f"./uploads/{filename}")
-        # записываем информацию о посте в json фаил
-        functions.add_new_post(filename, task)
+            # Сохраняем картинку под родным именем в папку uploads
+            picture.save(f"./uploads/{filename}")
+            # записываем информацию о посте в json фаил
+            functions.add_new_post(filename, task)
 
-        return render_template("post_uploaded.html", task=task, filename=filename)
+            return render_template("post_uploaded.html", task=task, filename=filename)
+        else:
+            return render_template('error_on_the_server.html')
     else:
         extension = filename.split(".")[-1]
         return f"Тип файлов {extension} не поддерживается"
