@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, send_from_directory
+from flask import Blueprint, render_template, request
+import logging
 
 import functions
 
@@ -26,6 +27,7 @@ def add_post():
     обрабатывает ошибки разрешения
     :return: выводит либо информацию о загрузке или ошибку
     """
+    logging.basicConfig(level=logging.DEBUG, filename='post_uploads.log', format='%(asctime)s [%(levelname)s]%(message)s')
     # Получаем файл
     picture = request.files.get("picture")
     # Получаем имя файла у загруженного фала
@@ -49,6 +51,7 @@ def add_post():
             return render_template('error_on_the_server.html')
     else:
         extension = filename.split(".")[-1]
+        logging.info(f"Загружаемый фаил имеет разрешение {extension}")
         return f"Тип файлов {extension} не поддерживается"
 
 

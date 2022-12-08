@@ -24,10 +24,19 @@ def search_post():
     поиск поста по слову
     :return: список постов
     """
+    logging.basicConfig(level=logging.INFO, filename='search.log', format='%(asctime)s [%(levelname)s] %(message)s')
     string_search = request.args['s']
-    all_post = functions.search_for_posts(string_search)
-    if all_post:
-        return render_template('post_list.html', all_post=all_post, string_search=string_search)
+    if string_search:
+
+        all_post = functions.search_for_posts(string_search)
+        logging.info(f"пользователь ищет слово {string_search}")
+        if all_post:
+            return render_template('post_list.html', all_post=all_post, string_search=string_search)
+        else:
+            return render_template('error_on_the_server.html')
     else:
-        return render_template('error_on_the_server.html')
+        logging.info("пользователь не ввёл слово")
+        return render_template('search_not_string.html')
+
+
 
